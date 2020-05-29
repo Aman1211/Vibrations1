@@ -6,6 +6,7 @@ const getdb=require("../db").getdb;
 router.get("/show_Requests",(req,res,next)=>{
     if(req.session.username)
     {
+<<<<<<< HEAD
         let page=parseInt(req.query.page);
         page=page-1;
                const db=getdb();
@@ -17,6 +18,14 @@ router.get("/show_Requests",(req,res,next)=>{
                     })
                })
             });
+=======
+               const db=getdb();
+               db.collection("Main_Event").find({}).toArray((err,data)=>{
+                    res.render("admin/show/show_Requests",{
+                        info:data
+                    })
+               })
+>>>>>>> 51ad2ecd43b5ab386ca80bf11b67f7d37c991509
 
     }
     else
@@ -29,6 +38,7 @@ router.get("/show_Requests",(req,res,next)=>{
 router.get("/view_Requests",(req,res,next)=>{
  if(req.session.username)
  {
+<<<<<<< HEAD
      let page=parseInt(req.query.page);
     let event=req.query.event_name;
     const db=getdb();
@@ -44,6 +54,18 @@ router.get("/view_Requests",(req,res,next)=>{
         })
     })
 })
+=======
+    let event=req.query.event_name;
+    const db=getdb();
+    event=[event,"abc"]
+    db.collection("Student").find({volunteer_event:{$in:event}}).toArray((err,data)=>{
+        
+        res.render("admin/show/view_Requests",{
+            info:data,
+            event:req.query.event_name
+        })
+    })
+>>>>>>> 51ad2ecd43b5ab386ca80bf11b67f7d37c991509
  }
  else
  {

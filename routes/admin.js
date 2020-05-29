@@ -664,7 +664,21 @@ router.get("/request_Status",(req,res,next)=>{
 })
 
 
-     
+router.get("/sponsor", (req, res, next) => {
+    console.log("heyyayaa")
+    const db = getdb();
+    db.collection('Sponsers').find().toArray((err, data) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(data);
+            console.log(data);
+        }
+    })
+});
+
+
 
 
 

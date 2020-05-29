@@ -71,8 +71,32 @@
                               <input type="text" class="form-control" id="exampleTime" placeholder="Judges" name="judges" multiple value="">
                               <% } %>
                           </div>
+<<<<<<< HEAD
                          
                      
+=======
+                          <div class="form-group">
+                            <label for="exampleSponsers"> Sponsers </label>
+                              <select class="form-control" id="exampleSponsers" name="sponsers" multiple>
+                                <% if(detail[i].Sub_Events.Sponsers!=null) {  %>
+                                
+                               <% detail[i].Sub_Events.Sponsers.forEach(info=>{ %>
+                                <option selected readonly> <%= info.Sponser_name %></option>
+                              <% })} %>
+
+                               <% for(let a=0;a < sponser.length;a++) { %>
+                                
+                                 <option><%= sponser[a].Sponser_name %></option>
+                                 <% } %>
+                              </select>
+                            </div>
+                          
+                      <div class="form-group">
+                          <label for="exampleFile">Event pdf</label>
+                          
+                          <input type="file" class="form-control" id="exampleFile" name="upload" value="<%= detail[i].Sub_Events.pdf %>"> 
+                      </div>
+>>>>>>> 51ad2ecd43b5ab386ca80bf11b67f7d37c991509
                       <div class="form-group">
                         
                         <input type="submit" class="form-control" name="submit" value="Submit" href="edit_Event" style="font-weight: bold; background-color:azure;">

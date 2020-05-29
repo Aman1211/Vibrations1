@@ -28,7 +28,11 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleCategory">Select Event Category</label>
+<<<<<<< HEAD
                           <select class="form-control" id="exampleCategory" name="cat" required>
+=======
+                          <select class="form-control" id="exampleCategory" name="cat">
+>>>>>>> 51ad2ecd43b5ab386ca80bf11b67f7d37c991509
                             <option>Dance</option>
                             <option>Music</option>
                             <option>Others</option>
@@ -39,11 +43,19 @@
                        
                       <div class="form-group">
                         <label for="exampleInputEmail3">Event Name</label>
+<<<<<<< HEAD
                         <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Event Name" name="event_name" required>
                       </div>
                       <div class="form-group">
                         <label for="exampleVenue">Select Event Venue</label>
                           <select class="form-control" id="exampleVenue" name="venue" required>
+=======
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Event Name" name="event_name">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleVenue">Select Event Venue</label>
+                          <select class="form-control" id="exampleVenue" name="venue">
+>>>>>>> 51ad2ecd43b5ab386ca80bf11b67f7d37c991509
                             <option>Auditorium</option>
                             <option>OAT</option>
                             <option>Ground</option>
@@ -52,16 +64,25 @@
                       
                         <div class="form-group">
                             <label for="exampleDate">Event Date</label>
+<<<<<<< HEAD
                             <input type="date" class="form-control" id="exampleDate" placeholder="Date of Event" name="date" required>  
                           </div>
                           <div class="form-group">
                             <label for="exampleTime">Event Time</label>
                             <input type="text" class="form-control" id="exampleTime" placeholder="Time of Event" name="time" required> 
+=======
+                            <input type="text" class="form-control" id="exampleDate" placeholder="Date of Event" name="date">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleTime">Event Time</label>
+                            <input type="text" class="form-control" id="exampleTime" placeholder="Time of Event" name="time"> 
+>>>>>>> 51ad2ecd43b5ab386ca80bf11b67f7d37c991509
                           </div>
                           <div class="form-group">
                             <label for="exampleTime">Judges</label>
                             <input type="text" class="form-control" id="exampleTime" placeholder="Judges" name="judges" multiple>
                           </div>
+<<<<<<< HEAD
                         
                           
                       <div class="form-group">
@@ -73,6 +94,23 @@
                         <label for="exampleFile">Event pdf</label>
                         <input type="file" class="form-control" id="exampleFile" name="upload" required> 
                     </div>
+=======
+                          <div class="form-group">
+                            <label for="exampleSponsers"> Sponsers </label>
+                              <select class="form-control" id="exampleSponsers" name="sponsers" multiple>
+                               
+                               <% for(let a=0;a < sponser.length;a++) { %>
+                                
+                                 <option><%= sponser[a].Sponser_name %></option>
+                                 <% } %>
+                              </select>
+                            </div>
+                          
+                      <div class="form-group">
+                          <label for="exampleFile">Event pdf</label>
+                          <input type="file" class="form-control" id="exampleFile" name="upload"> 
+                      </div>
+>>>>>>> 51ad2ecd43b5ab386ca80bf11b67f7d37c991509
                       <div class="form-group">
                         
                         <input type="submit" class="form-control" name="submit" value="Submit" style="font-weight: bold; background-color:azure;">

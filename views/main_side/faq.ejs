@@ -1,0 +1,171 @@
+<html>
+    <head>
+
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+      
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+input[type=text], select, textarea {
+  width: 100%;
+
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container2 {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  display:inline-block;
+  padding: 20px;
+  width:500px;
+  margin-left: 80px;
+
+}
+.container
+{
+
+  display:block;
+  width: 600px;
+}
+
+.faq {
+  padding: 60px 0;
+}
+.faq .faq-list {
+  padding: 0;
+  list-style: none;
+}
+.faq .faq-list li {
+    background-color: #ffee5a;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px 40px;
+}
+.faq .faq-list a {
+    display: block;
+    position: relative;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    text-decoration: none;
+}
+
+.faq .faq-list i {
+  font-size: 16px;
+  position: absolute;
+  left: -25px;
+  top: 6px;
+  transition: 1s;
+}
+.faq-title {
+    text-align: center;
+    font-size: 17px;
+    border-bottom: 2px dashed #ffffff;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    color: #ffffff;
+}
+
+.faq .faq-list p {
+  padding-top: 5px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.collapsed i.fas.fa-arrow-up {
+    
+}
+.collapsed i.fas.fa-arrow-up {
+    transform: rotate(180deg);
+}
+    </style>
+    </head>
+<section class="faq bg-primary">
+    <div class="container">
+      <div class="faq-title">
+        <h2>All Questions</h2>
+
+      </div>
+      <ul class="faq-list">
+     <% for(i of queryfeed) {%>
+        <li data-aos="fade-up" data-aos-delay="100" class="aos-init aos-animate">
+          <a data-toggle="collapse" class="collapsed" href="#faq1" aria-expanded="false"><%= i.Query_String %><i class="fas fa-arrow-up"></i></a>
+          <div id="faq1" class="collapse" data-parent=".faq-list" style="">
+            <p>
+              <%= i.reply_string %>
+            </p>
+          </div>
+        </li>
+     <% } %>
+     
+      </ul>
+    </div>
+<% if(queryfeed_user.length>0) { %>
+<div class="container">
+  <div class="faq-title">
+    <h2>Your Questions</h2>
+
+  </div>
+  <ul class="faq-list">
+ <% for(i of queryfeed_user) {%>
+    <li data-aos="fade-up" data-aos-delay="100" class="aos-init aos-animate">
+      <a data-toggle="collapse" class="collapsed" href="#faq1" aria-expanded="false"><%= i.Query_String %><i class="fas fa-arrow-up"></i></a>
+      <div id="faq1" class="collapse" data-parent=".faq-list" style="">
+        <p>
+          <%= i.reply_string %>
+        </p>
+      </div>
+    </li>
+ <% } %>
+ 
+  </ul>
+</div>
+<% } %>
+
+<div class="container2">
+  <form method="post"  action="\faq_ask_question">
+
+
+    <label for="subject"><h3>Still have unanswered questions?</h3></label>
+    <textarea id="question" name="question" placeholder="Ask Question.." style="height:200px"></textarea>
+
+    <input type="submit" value="Post Question">
+  </form>
+</div>
+<div class="container2">
+  <form method="post" action="\faq_give_feedback">
+
+
+    <label for="subject"><h3>Give Feedback</h3></label>
+    <textarea id="feedback" name="feedback" placeholder="Write Feedback.." style="height:200px"></textarea>
+
+    <input type="submit" value="Post Feedback">
+  </form>
+</div>
+	</section>
+  <section>
+
+  </section>
+  </html>
