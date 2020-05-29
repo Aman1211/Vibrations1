@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head><title>Events</title></head>
+<body>
+  
+        <h4 class="card-title">Events</h4>
+          <table border='1'>
+            <thead>
+              <tr>
+                <th>
+                  Event Name
+                </th>
+                <th>
+                  Venue
+                </th>
+                <th>
+                  Date time
+                </th>
+                
+                <th>
+                    Rules
+                  </th>
+                  
+                <th>
+                  Participate
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for( let i=0;i < Events.length ; i++){ %>
+               <tr>
+                
+                    <td>
+                      <%= Events[i].Sub_Events.Event_name %>
+                    </td>
+                    <td>
+                      <%= Events[i].Sub_Events.Venue %>
+                    </td>
+                    <td>
+                      <%= Events[i].Sub_Events.Date %> <%= Events[i].Sub_Events.time %>
+                    </td>
+                    <td>
+                      <a href="<%= Events[i].Sub_Events.pdf %>" download>Show Rules</a>
+                    </td>
+                    <td>
+                      <a class="btn btn-info" href="/participate_Events?eventname=<%= Events[i].Sub_Events.Event_name %>">Participate</a>
+                      
+                    </td>
+                </tr>
+                 <% } %>
+               
+              
+                    
+                
+               
+                  
+          </tbody>
+          </table>
+</body>
+</html>

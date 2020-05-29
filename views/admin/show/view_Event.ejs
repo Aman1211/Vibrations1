@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">View Events</h4>
+        
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  Event Category
+                </th>
+                <th>
+                  Event Name
+                </th>
+                <th>
+                  Venue
+                </th>
+                <th>
+                Date
+                </th>
+                <th>
+                  Time
+                </th>
+                <th>
+                    Judges
+                  </th>
+                <th>
+                    Participants
+                  </th>
+                  <th>
+                    Volunteers
+                  </th>
+                  <th>
+                    Sponsers
+                  </th>
+                  <th>
+                    Edit
+                  </th>
+                  <th>
+                    Delete
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0;i < Event.length; i++) { %>
+                    <%  Event[i].Sub_Events.forEach(event=>{ %>
+              <tr>
+                <td class="py-1">
+                  <%= Event[i].Category_name %>
+                </td>
+             
+                <td>
+                  <%= event.Event_name %>
+                </td>
+                <td>
+                  <%= event.Venue %>
+                </td>
+                <td>
+                  <%= event.Date %>
+                </td>
+                <td>
+                <%= event.time %>
+                </td>
+                <td>
+                  <%= event.Judges %>
+                    </td>
+                <td>
+
+                 <a class="btn btn-info" href="/view_Participants?Event_name=<%= event.Event_name %>">Participants</a>
+                </td>
+                <td>
+
+                    <a class="btn btn-info" href="/view_Volunteer?Event_name=<%= event.Event_name %>">Volunteers</a>
+    
+                </td>
+                <td>
+
+                    <a class="btn btn-info" href="/view_Sponsers?Event_name=<%= event.Event_name %>">Sponsers</a>
+    
+                </td>
+                <td>
+                  <a class="btn btn-info" href="/edit_Event?Event_name=<%= event.Event_name %>">Edit</a>
+                   
+                </td>
+                <td>
+
+                  <a class="btn btn-info" href="/edit_Event?Event_name=<%= event.Event_name %>">Delete</a>
+                </td>
+              </tr>
+              <%  })} %>
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <%- include("../footer") %>
+  </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

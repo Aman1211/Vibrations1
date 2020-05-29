@@ -1,0 +1,90 @@
+
+//Mongodb automatically generate id so id feild is not specified.
+// if specified somewhere then it's a reference.
+---------------------------------------------------
+Student
+
+Student Name
+Contact
+Email
+Student_Status(For checking  bit or non)
+Batch
+Product object(For tracking orders of students)
+volunteer_status
+----------------------------------------------------
+Query and Feedback
+
+Student_id
+Query or Feedback String
+Reply String
+----------------------------------------------------
+Product
+
+Product_name
+price
+qty
+----------------------------------------------------
+Main_Event
+
+Event_category_name
+Objects of Sub_Events
+       Event_name
+       Venue
+       Time
+       Participation objects
+       Judges Objects
+       Volunteer Objects
+-----------------------------------------------------
+Sponsers
+
+Sponsers_name
+type
+Event_Object
+Contract Details(if Any)
+-----------------------------------------------------
+Colleges
+
+College_name
+Email
+
+-----------------------------------------------------
+Gallery
+
+Images
+
+-----------------------------------------------------
+Committee
+
+Committee name
+type (Core or Associate)
+Members objects
+Inventory objects(all inventory of a particular committee)
+
+-----------------------------------------------------
+
+Funds
+
+Committee_id
+Fund allocated(will decrease with every expense done by particular committee)
+total fund ( only of core committee)
+
+-----------------------------------------------------
+Expenses
+
+Committee_id
+Expenses_detail
+Expense_amt
+bill_img
+
+
+
+// Orders,Inventory,Sub-Events,Venue,time-slots now merged as a objects with other tables.
+
+
+       
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div class="container">  
+        <form id="contact" action="" method="post">
+          <h3>Colorlib Contact Form</h3>
+          <h4>Contact us for custom quote</h4>
+          <!-- <fieldset>
+            <input placeholder="Your name" type="text" tabindex="1" required autofocus>
+          </fieldset> -->
+          <fieldset>
+            <input name="team" placeholder="Your team name" type="text" tabindex="2" required autofocus>
+          </fieldset>
+          <fieldset>
+            <input name="institute" placeholder="Your Institute  name" type="text" tabindex="3" required autofocus>
+          </fieldset>
+          <fieldset>
+            <input name="email" placeholder="Your Email Address" type="email" tabindex="4" required>
+          </fieldset>
+          <fieldset>
+            <input name="phone" placeholder="Your Phone Number" type="number"  tabindex="5" required>
+          </fieldset>
+          <fieldset>
+            <input name="event" placeholder="Event participated" type="url" tabindex="6" value="<%= EventName %>" readonly>
+          </fieldset>
+         
+          
+            <form action='/participate_Events' method="post">
+                <button>Submit</button>
+              </form> 
+          
+          <!-- <p class="copyright">Designed by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a></p> -->
+        </form>
+      </div>
+</body>
+</html>

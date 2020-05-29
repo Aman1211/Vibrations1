@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <form method="POST" enctype="multipart/form-data">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Edit Event</h4>
+                    <div class="form-group">
+                    <input class="form-control" style="text-align:center; color:red;font-weight: bold;" type="text" value="<%=message%>" hidden>
+                    </div>
+                    <% for(let i=0; i < detail.length; i++) { %>
+
+                         <div class="form-group">
+                        <label for="exampleCategory">Select Event Category</label>
+                          <select class="form-control" id="exampleCategory" name="cat">
+                            <option readonly selected><%= detail[i].Category_name %></option>
+                            <option>Dance</option>
+                            <option>Singing</option>
+                            <option>Others</option>
+                          </select>
+                        </div>
+                       
+                      				
+                       
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Event Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Event Name" name="event_name" value="<%=detail[i].Sub_Events.Event_name %>">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleVenue">Select Event Venue</label>
+                          <select class="form-control" id="exampleVenue" name="venue">
+                            <option readonly selected><%= detail[i].Sub_Events.Venue %></option>
+                            <option>Auditorium</option>
+                            <option>OAT</option>
+                            <option>Ground</option>
+                          </select>
+                        </div>
+                      
+                        <div class="form-group">
+                            <label for="exampleDate">Event Date</label>
+                            <input type="text" class="form-control" id="exampleDate" placeholder="Date of Event" name="date" value="<%= detail[i].Sub_Events.Date %>"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleTime">Event Time</label>
+                            <input type="text" class="form-control" id="exampleTime" placeholder="Time of Event" name="time" value="<%= detail[i].Sub_Events.time %>"> 
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleTime">Judges</label>
+                            <% if(detail[i].Sub_Events.Judges.length>1) { %>
+            
+                            <input type="text" class="form-control" id="exampleTime" placeholder="Judges" name="judges" multiple value="<%= detail[i].Sub_Events.Judges %>">  
+                            <% } else {  %>
+                              <input type="text" class="form-control" id="exampleTime" placeholder="Judges" name="judges" multiple value="">
+                              <% } %>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleSponsers"> Sponsers </label>
+                              <select class="form-control" id="exampleSponsers" name="sponsers" multiple>
+                                <% if(detail[i].Sub_Events.Sponsers!=null) {  %>
+                                
+                               <% detail[i].Sub_Events.Sponsers.forEach(info=>{ %>
+                                <option selected readonly> <%= info.Sponser_name %></option>
+                              <% })} %>
+
+                               <% for(let a=0;a < sponser.length;a++) { %>
+                                
+                                 <option><%= sponser[a].Sponser_name %></option>
+                                 <% } %>
+                              </select>
+                            </div>
+                          
+                      <div class="form-group">
+                          <label for="exampleFile">Event pdf</label>
+                          
+                          <input type="file" class="form-control" id="exampleFile" name="upload" value="<%= detail[i].Sub_Events.pdf %>"> 
+                      </div>
+                      <div class="form-group">
+                        
+                        <input type="submit" class="form-control" name="submit" value="Submit" href="edit_Event" style="font-weight: bold; background-color:azure;">
+                    </div>
+                  <% } %>
+                      </div>
+         
+        
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+       <%- include("../footer") %>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    </form>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+</div>
+  <!-- plugins:js -->
+  </body>
+
+</html>
+
