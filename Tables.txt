@@ -1,0 +1,21 @@
+Collection/Tables
+
+1)Student(For all types of Students)
+2)query and feedback
+3)product(For the item for sale)
+4)Main Event(Main Categories of Events)
+5)Sub Events(Sub Categories)
+5)Orders(For
+6)Committee(For All Committees)
+7)Sponser/Security
+8)Venues
+9)time Slots
+10)Inventory(To manage inventory of all committees)
+11)Colleges(To send Invitation)
+12)Allocation and Expenses(Expenses details)
+13)Gallery
+14)Funds(All the details of fund allocation)
+
+
+DCJBr9BW0SD9T87h
+Altas pass:-node$123

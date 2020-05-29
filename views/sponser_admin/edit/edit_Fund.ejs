@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <form method="POST" enctype="multipart/form-data">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Edit Sponser Fund</h4>
+                    
+                    <div class="form-group">
+                        <label for="exampleInputEmail3">Sponser</label>
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Amount" name="sponser" value="<%=info[0].data[0].Sponser_name %>" readonly>
+                      </div>
+                           
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Event</label>
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Amount" name="event" value="<%= info[0].Event_name %>" readonly>
+                      </div>
+                    
+                    <div class="form-group">
+                        <label for="exampleInputEmail3">Sponser Type</label>
+                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="Amount" name="type" value="<%= info[0].Sponsers.type %>" readonly>
+                      </div>
+                 <div class="form-group">
+                        <label for="exampleInputEmail3">Fund Amount</label>
+                        <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Amount" name="amt" value="<%= info[0].Sponsers.amt %>" required>
+                      </div>
+                      
+                      
+                                            
+                        <input type="submit" class="form-control" name="submit" value="Submit" style="font-weight: bold; background-color:azure;">
+                    </div>
+                  
+                      </div>
+         
+        
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+      
+        <!-- partial -->
+      </div>
+      <%- include("../footer") %>
+      <!-- main-panel ends -->
+    </div>
+    </form>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+</div>
+  </div>
+  <!-- plugins:js -->
+  </body>
+
+</html>
+

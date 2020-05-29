@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Sponsomnr Details</h4>
+        
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Logo 
+                </th>
+                <th>
+                  MOU
+                </th>
+              <th>
+                  Funds
+              </th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0;i < info.length; i++) { %>
+                    <% info[i].data.forEach(data1=>{ %>
+                   
+              <tr>
+                <td class="py-1">
+                  <%= data1.Sponser_name %>
+                </td>
+             
+                <td>
+                  <%= info[i].Sponsers.type %>
+                </td>
+                <td>
+                  <img src="/<%= data1.Image %>" height="100" width="100">
+                </td>
+                <td>
+                  <a class="btn btn-info" href="/view_mou1?id=<%= data1._id %>">MOU</a>
+                </td>
+                <td>
+                  <%= info[i].Sponsers.amt %>
+                </td>
+                
+              </tr>
+              <% })  }%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include("../footer") %>
+  </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

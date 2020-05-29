@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <form method="POST" enctype="multipart/form-data">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Add Expense</h4>
+                    <div class="form-group">
+                    
+                    </div>
+        
+                      				
+
+                 <div class="form-group">
+                        <label for="exampleInputEmail3">Expense Amount</label>
+                        <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Amount" name="amt" required>
+                      </div>
+                      
+                      
+                        <div class="form-group">
+                            <label for="exampleDate">Description</label>
+                            <input type="text" class="form-control" id="exampleDate" placeholder="Detail of Expense" name="des" required>
+                          </div>
+                          
+        
+                      <div class="form-group">
+                          <label for="exampleFile">Invoice pdf or image</label>
+                          <input type="file" class="form-control" id="exampleFile" name="upload" required> 
+                      </div>
+                      <div class="form-group">
+                        
+                        <input type="submit" class="form-control" name="submit" value="Submit" style="font-weight: bold; background-color:azure;">
+                    </div>
+                  
+                      </div>
+         
+        
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+       <%- include("../footer") %>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    </form>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+</div>
+  <!-- plugins:js -->
+  </body>
+
+</html>
+

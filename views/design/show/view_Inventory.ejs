@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+<form>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> Inventory Details</h4>
+        
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Company
+                </th>
+               <th>
+                  Quantity
+               </th>
+               <th>
+                  Last Used
+               </th>
+              
+               <th>
+                 Increment
+               </th>  
+               <th>
+                 Decrement
+              </th>     
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let i=0;i < info.length; i++) { let c=0; %>
+                <%  info[i].Inventory.forEach(inventory=>{ %>
+              <tr>
+                <td class="py-1" >
+                  <%= inventory.item_name %>
+                </td>  
+                <td name="company"> 
+                    <%= inventory.company %>
+                </td>
+                <td>
+                 <%= inventory.quantity %>
+                </td>
+                <td>
+                  <%= inventory.last_issued %>
+                </td>
+               
+                <td>
+                 <a class="btn btn-info" href="/plus_inventory1?id=<%=inventory._id%>&qty=<%= inventory.quantity %>">Increment Qty</a>
+                 
+                </td>
+                <% if(inventory.quantity>0) { %>
+                <td>
+                  <a class="btn btn-info" href="/minus_inventory1?id=<%=inventory._id%>&qty=<%= inventory.quantity %>">Decrement Qty</a>
+      
+                 </td>
+                 <% } else{%>
+                  <td>
+                    <a class="btn btn-info" href="" onclick="alert1()">Decrement Qty</a>
+        
+                   </td>
+                <% } %>
+               
+              </tr>
+              <% c++;})}%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+  <%- include("../footer") %>
+  </div>
+  </div>
+</div>
+</div>
+<script>
+    function alert1()
+     {
+      
+     alert("Insufficient Quantity");
+    
+     }
+  </script>
+</body>
+</html>

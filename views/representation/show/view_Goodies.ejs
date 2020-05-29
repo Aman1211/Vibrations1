@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> Goodies Details</h4>
+        
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  Product Image
+                </th>
+                <th>
+                  Title
+                </th>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Price
+                </th>
+                <th>
+                  Quantity
+                </th>
+                <th>
+                  Edit Product
+                </th>
+                <th>
+                  Delete Product
+                </th>
+                <th>
+                  Orders
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0;i < Products.length; i++) { %>
+                 
+              <tr>
+                <td>
+                  <!--<%= Products[i].image%>-->
+                  <img src="/<%= Products[i].image %>" alt="an image" height=100px width=100px >
+                </td> 
+                <td>
+                  <%= Products[i].title %>
+                </td>
+                <td>
+                  <%= Products[i].description %>
+                </td>
+                <td>
+                  <%= Products[i].price %>
+                </td>
+                <td>
+                  <%= Products[i].quantity %>
+                </td>
+                <td>                
+                  <a class="btn btn-info" href="/Edit_Goodies?goodiesid=<%= Products[i]._id %>">Edit Product</a>
+                </td>
+                <td>    
+                  <form action='/delete_Goodies?goodiesid=<%= Products[i]._id %>' method="post">
+                    <button class="btn btn-info">Delete Product</button>
+                  </form>      
+                  <!--<a class="btn btn-info" href="/delete_Goodies?goodiesid=<%= Products[i]._id %>">Delete Product</a>-->
+                </td>
+                <td>
+                    <a class="btn btn-info" href="/view_Orders?goodiesid=<%=Products[i]._id %>">View Orders</a>
+                </td>
+              </tr>
+              <% }%>
+            </tbody>
+          </table>
+          <div style="padding-top:5px;margin-left: 3px;">
+            <% let k=1 %>
+            <%  for(let i=1 ; i <= count; i=i+5) { %>
+               
+              <a class="btn btn-info" href="/view_Goodies?page=<%= k %>"><%= k %></a>
+              <% k++ %>
+              <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include("../footer") %>
+  </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

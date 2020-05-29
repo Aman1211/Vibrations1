@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Message</h4>
+        
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+             <h2> <%= data %></h2>
+            </thead>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include("../footer") %>
+  </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

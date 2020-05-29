@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title"> Funds Details</h4>
+        
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  Committee Name
+                </th>
+                <th>
+                  Fund Amount
+                </th>
+                <th>
+                  Edit
+                </th>
+              
+              </tr>
+            </thead>
+            <tbody>
+                <% for(let i=0;i < info.length; i++) { %>
+                <% info[i].data.forEach(data1=>{ %>       
+              <tr>
+                <td class="py-1">
+                  <%= data1.Committee_name %>
+                </td>
+                 <% if(data1.type=='Core') { %>
+                <td>
+                 <%= info[i].total_fund %>
+                </td>
+                <% } else {%>
+                 <td>
+
+                <%= info[i].fund_allocated %>
+                 </td>
+                 <% } %>
+                <td>
+                    <a class="btn btn-info" href="/Edit_Fund?Com_id=<%= info[i].committee_id %>&type=<%= data1.type %>">Edit</a>
+                </td>
+                
+              </tr>
+              <% })}%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include("../footer") %>
+  </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

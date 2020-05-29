@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("../style.ejs") %>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+  
+    <!-- partial -->
+
+    <%- include("../head1.ejs") %>
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+     
+      <!-- partial -->
+     
+      <%- include("../sidebar") %>
+     
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <form>
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Details of Candidate</h4>
+                    <div class="form-group">
+                    
+                    </div>
+        
+                      				
+
+                 <div class="form-group">
+                        <label for="exampleInputEmail3">Message</label>
+                        <textarea class="form-control" id="exampleInputEmail3" placeholder="Message" name="info" readonly><%= text %></textarea>
+                        
+                      </div>
+                      
+                      
+                    
+                      <div class="form-group">
+                        
+                    <a href="/accept_Request?id=<%=stud_id%>&event=<%= event %>"" class="form-control"  style="font-weight: bold; background-color:azure;">Accept</a>
+                    </div>
+                    <div class="form-group">
+                        
+                        <a href="/reject_Request?id=<%= stud_id%>&event=<%= event %>" class="form-control" style="font-weight: bold; background-color:azure;">Reject</a>
+                        </div>
+                  
+                      </div>
+         
+        
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+       <%- include("../footer") %>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    </form>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+</div>
+  <!-- plugins:js -->
+  </body>
+
+</html>
+
