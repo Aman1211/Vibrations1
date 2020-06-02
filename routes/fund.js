@@ -241,10 +241,10 @@ router.get("/fund_Requesta",(req,res,next)=>{
                        const com_id=data1.com_id
                        db.collection("Funds").findOne({committee_id:com_id},(err,data2)=>{
                            let fund=data2.total_fund;
-                           fund=fund-amt;
+                           fund=parseInt(fund)-amt;
                        db.collection("Funds").findOne({committee_id:comm_id},(err,data3)=>{
                            let fund1=data3.fund_allocated;
-                           fund1=fund1+amt;
+                           fund1=parseInt(fund1)+amt;
                            db.collection("Funds").updateOne({committee_id:comm_id},{$set:{fund_allocated:fund1}},(err,data4)=>{
                                if(err)
                                console.log("error")

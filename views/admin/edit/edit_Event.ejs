@@ -56,8 +56,9 @@
                       
                         <div class="form-group">
                             <label for="exampleDate">Event Date</label>
-                            <input type="text" class="form-control" id="exampleDate" placeholder="Date of Event" name="date" value="<%= detail[i].Sub_Events.Date %>"> 
-                          </div>
+                            <input type="text" class="form-control" id="exampleDate1" placeholder="Date of Event" name="date" value="<%= detail[i].Sub_Events.Date %>"> 
+     
+                                             </div>
                           <div class="form-group">
                             <label for="exampleTime">Event Time</label>
                             <input type="text" class="form-control" id="exampleTime" placeholder="Time of Event" name="time" value="<%= detail[i].Sub_Events.time %>"> 
@@ -71,32 +72,26 @@
                               <input type="text" class="form-control" id="exampleTime" placeholder="Judges" name="judges" multiple value="">
                               <% } %>
                           </div>
-<<<<<<< HEAD
+                          <div class="form-group">
+                            <label for="exampleFile">Event Logo</label>
+                            <input type="file" class="form-control" id="exampleFile" name="upload" accept="image/*" > 
+                        </div>
+  
+                        <div class="form-group">
+                          <label for="exampleFile">Event pdf</label>
+                          <input type="file" class="form-control" id="exampleFile" name="upload" accept=".pdf"> 
+                      </div>
+                          <div class="form-group">
+                            <label for="exampleTime">Team Event</label>
+                            <% if(detail[i].Sub_Events.teamstatus=='on') { %>
+                            <input type="checkbox" class="form-control" id="exampleTime"  name="team" checked> 
+                            <% } else { %>
+                              <input type="checkbox" class="form-control" id="exampleTime"  name="team" > 
+                              <% } %>
+
+                          </div>
                          
                      
-=======
-                          <div class="form-group">
-                            <label for="exampleSponsers"> Sponsers </label>
-                              <select class="form-control" id="exampleSponsers" name="sponsers" multiple>
-                                <% if(detail[i].Sub_Events.Sponsers!=null) {  %>
-                                
-                               <% detail[i].Sub_Events.Sponsers.forEach(info=>{ %>
-                                <option selected readonly> <%= info.Sponser_name %></option>
-                              <% })} %>
-
-                               <% for(let a=0;a < sponser.length;a++) { %>
-                                
-                                 <option><%= sponser[a].Sponser_name %></option>
-                                 <% } %>
-                              </select>
-                            </div>
-                          
-                      <div class="form-group">
-                          <label for="exampleFile">Event pdf</label>
-                          
-                          <input type="file" class="form-control" id="exampleFile" name="upload" value="<%= detail[i].Sub_Events.pdf %>"> 
-                      </div>
->>>>>>> 51ad2ecd43b5ab386ca80bf11b67f7d37c991509
                       <div class="form-group">
                         
                         <input type="submit" class="form-control" name="submit" value="Submit" href="edit_Event" style="font-weight: bold; background-color:azure;">
@@ -119,6 +114,10 @@
 </div>
   <!-- plugins:js -->
   </body>
+  <script>
+    
+    
+  </script>
 
 </html>
 

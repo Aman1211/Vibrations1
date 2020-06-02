@@ -76,6 +76,10 @@ router.post("/login",(req,res,next)=>{
                                 req.session.username=username;  
                                 return res.redirect("/admin_core");
                                }
+                               else
+                               {
+                                   return res.redirect("http://localhost:4200")
+                               }
                            })
                        }
                        else
@@ -112,7 +116,9 @@ router.post("/reg",(req,res,next)=>{
  const con=req.body.contact;
  const bit=req.body.bit;
  const img1=req.files;
- const img=img1[0].path
+ console.log(req.file)
+ const img=img1[0].filename
+ const img2=img.replace(img,"images\\"+img)
 bcrypt.hash(pass,12).then(data=>{
    console.log(bit);  
 const pass1=data;
@@ -126,7 +132,7 @@ const data1={
       "volunteer_status":"0",
       "volunteer_event":[],
       "com_status":'0',
-      "image":img
+      "image":img2
       
 }
 
@@ -218,6 +224,7 @@ router.get("/about",(req,res,next)=>{
          const stream=data.stream;
          const year=data.year;
          const stud_id=data.student_id;
+         const image=data.image
          let status;
          if(bit==="on")
               status="BIT Student";
@@ -232,7 +239,8 @@ router.get("/about",(req,res,next)=>{
                 status1:bit,
                 stream:stream,
                 year:year,
-                stud_id:stud_id
+                stud_id:stud_id,
+                image:image
             });
 
  });

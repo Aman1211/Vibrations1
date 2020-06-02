@@ -9,8 +9,8 @@ const bcrypt=require("bcryptjs");
 const transport=nodemailer.createTransport({
 service:"gmail",
 auth:{
-    user:"aman.sharma122111@gmail.com",
-    pass:"aman$123"
+    user:"sharma.aman1298@gmail.com",
+    pass:"aman$1234"
 }
 });
 
@@ -27,7 +27,7 @@ router.post("/forgot",(req,res,next)=>{
        req.session.changemail=email;
        transport.sendMail({
         to:email,
-        from:"aman.sharma122111@gmail.com",
+        from:"sharma.aman1298@gmail.com",
         subject:"OTP for Resetting the Password",
         text:"Your One Time Password:-"+req.session.otp
          

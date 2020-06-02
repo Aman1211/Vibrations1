@@ -67,6 +67,18 @@
 </div>
   <!-- plugins:js -->
   </body>
+  <script>
+    function check(){
+     
+      const id=document.getElementById('exampleInputEmail3')
+     
+      if(parseInt(id.value)<0)
+      {
+        alert("Expense amount must be positive")
+        id.value=""
+      }
+    }
+  </script>
 
 </html>
 

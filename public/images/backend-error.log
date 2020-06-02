@@ -1,0 +1,46 @@
+
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:518:11)
+    at ServerResponse.header (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/express/lib/response.js:771:10)
+    at ServerResponse.send (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/express/lib/response.js:170:12)
+    at ServerResponse.json (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/express/lib/response.js:267:15)
+    at ServerResponse.send (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/express/lib/response.js:158:21)
+    at Query.<anonymous> (/home/ubuntu/sbgbackend/SBG_BACKEND/routes/achievements.js:30:49)
+    at Query.<anonymous> (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/mysql/lib/protocol/sequences/Query.js:149:8) {
+  code: 'ERR_HTTP_HEADERS_SENT'
+}
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:518:11)
+    at ServerResponse.header (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/express/lib/response.js:771:10)
+    at ServerResponse.send (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/express/lib/response.js:170:12)
+    at ServerResponse.json (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/express/lib/response.js:267:15)
+    at ServerResponse.send (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/express/lib/response.js:158:21)
+    at Query.<anonymous> (/home/ubuntu/sbgbackend/SBG_BACKEND/routes/achievements.js:30:49)
+    at Query.<anonymous> (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/ubuntu/sbgbackend/SBG_BACKEND/node_modules/mysql/lib/protocol/sequences/Query.js:149:8) {
+  code: 'ERR_HTTP_HEADERS_SENT'
+}
+Warning: connect.session() MemoryStore is not
+designed for a production environment, as it will leak
+memory, and will not scale past a single process.
+

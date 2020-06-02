@@ -76,7 +76,8 @@ router.post("/dadd_Expenses",(req,res,next)=>{
     
         const amt=req.body.amt;
         const  des=req.body.des;
-        const pdf=req.file.path;
+        const pdf=req.files[0].filename;
+        const pdf1=pdf.replace(pdf,'images\\'+pdf)
          const db=getdb();
         const user=req.session.username;
      db.collection("Student").findOne({"email":user},(err,data)=>{
@@ -85,7 +86,7 @@ router.post("/dadd_Expenses",(req,res,next)=>{
              "committee_id":com_id,
              "expenses_detail":des,
              "expense_amt":amt,
-             "bill_img":pdf
+             "bill_img":pdf1
          }
          db.collection("Expenses").insertOne(data1,(err,data2)=>{
              if(err)
@@ -113,7 +114,7 @@ router.post("/dadd_Expenses",(req,res,next)=>{
                     })
                     }
                 })
-                res.redirect("/show_Expenses?Com_id=5e6eff464429714eccbd6aba&type=Coordinate")
+                res.redirect("/dshow_Expenses?Com_id=5e6eff464429714eccbd6aba&type=Coordinate")
              }
             })
      })
@@ -144,7 +145,7 @@ router.get("/dshow_Expenses",(req,res,next)=>{
 router.get("/download1",(req,res,next)=>{
     const path1=req.query.path;
     console.log(path1);
-        res.download("../PROJECT/"+path1);
+        res.download("../SEPROJECT/public/"+path1);
     
 });
 
@@ -185,7 +186,7 @@ router.post("/dadd_Member",(req,res,next)=>{
 })
 
 
-router.get("/process_Member",(req,res,next)=>{
+router.get("/dprocess_Member",(req,res,next)=>{
 if(req.session.username)
 {
        const mem=mongodb.ObjectID(req.query.stud);
@@ -198,7 +199,7 @@ if(req.session.username)
                console.log("error")
                else
                {
-                   res.redirect("/dadd_Member");
+                   res.redirect("/dview_Member");
                }
            },false,true)
        })

@@ -31,7 +31,7 @@
 
                  <div class="form-group">
                         <label for="exampleInputEmail3">Expense Amount</label>
-                        <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Amount" name="amt" required>
+                        <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Amount" name="amt" onblur="check()" value="" required>
                       </div>
                       
                       
@@ -67,6 +67,17 @@
 </div>
   <!-- plugins:js -->
   </body>
-
+<script>
+  function check(){
+   
+    const id=document.getElementById('exampleInputEmail3')
+   
+    if(parseInt(id.value)<0)
+    {
+      alert("Expense amount must be positive")
+      id.value=""
+    }
+  }
+</script>
 </html>
 

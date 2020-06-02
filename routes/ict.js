@@ -73,7 +73,8 @@ router.post("/iadd_Expenses",(req,res,next)=>{
     
     const amt=req.body.amt;
     const  des=req.body.des;
-    const pdf=req.file.path;
+    const pdf=req.files[0].filename;
+      const pdf1=pdf.replace(pdf,"images\\"+pdf)
      const db=getdb();
     const user=req.session.username;
  db.collection("Student").findOne({"email":user},(err,data)=>{
@@ -82,7 +83,7 @@ router.post("/iadd_Expenses",(req,res,next)=>{
          "committee_id":com_id,
          "expenses_detail":des,
          "expense_amt":amt,
-         "bill_img":pdf
+         "bill_img":pdf1
      }
      db.collection("Expenses").insertOne(data1,(err,data2)=>{
          if(err)
@@ -148,7 +149,7 @@ router.get("/ishow_Expenses",(req,res,next)=>{
 router.get("/idownload1",(req,res,next)=>{
     const path1=req.query.path;
     console.log(path1);
-        res.download("../PROJECT/"+path1);
+        res.download("../SEPROJECT/public/"+path1);
     
 });
 
@@ -195,7 +196,7 @@ router.post("/iadd_Member",(req,res,next)=>{
 })
 
 
-router.get("/process_Member",(req,res,next)=>{
+router.get("/iprocess_Member",(req,res,next)=>{
 if(req.session.username)
 {
        const mem=mongodb.ObjectID(req.query.stud);
@@ -272,7 +273,8 @@ router.get("/iadd_Inventory",(req,res,next)=>{
             const db=getdb();
             db.collection("Student").find({com_status:'0'}).toArray((err,data)=>{
                    res.render("ict/add/add_Inventory",{
-                       info:data
+                       info:data,
+                     
                    })
             })
     }
@@ -285,6 +287,7 @@ router.get("/iadd_Inventory",(req,res,next)=>{
 
 
 router.post("/iadd_Inventory",(req,res,next)=>{
+   
     const item_name=req.body.item_name;
     const company=req.body.company;
     const quantity=req.body.quantity;
@@ -324,7 +327,7 @@ router.post("/iadd_Inventory",(req,res,next)=>{
                 })
                 }
             })
-            return res.redirect("/iview_Inventory");
+            return res.redirect("/view_Inventory");
         })
     })
 });

@@ -145,7 +145,7 @@ router.get("/remove_Member1",(req,res,next)=>{
      {
          const user=mongodb.ObjectID(req.query.id);
          const db=getdb();
-         db.collection("Student").update({_id:user},{$unset:{"com_id":""}},(err,data)=>{
+         db.collection("Student").update({_id:user},{$set:{com_id:'0',com_status:'0'}},(err,data)=>{
              if(err)
              console.log('error')
              else
@@ -188,7 +188,8 @@ router.post("/add_Expenses1",(req,res,next)=>{
     
         const amt=req.body.amt;
         const  des=req.body.des;
-        const pdf=req.file.path;
+        const pdf=req.files[0].filename;
+        const pdf1=pdf.replace(pdf,"images\\"+pdf)
          const db=getdb();
         const user=req.session.username;
         db.collection("Student").findOne({"email":user},(err,data)=>{
@@ -197,7 +198,7 @@ router.post("/add_Expenses1",(req,res,next)=>{
              "committee_id":com_id,
              "expenses_detail":des,
              "expense_amt":amt,
-             "bill_img":pdf
+             "bill_img":pdf1
          }
          db.collection("Expenses").insertOne(data1,(err,data2)=>{
              if(err)
@@ -217,7 +218,7 @@ router.post("/add_Expenses1",(req,res,next)=>{
 
 
                
-                res.redirect("/add_Expenses1")
+                res.redirect("/show_Expenses1")
             
         
             
@@ -273,7 +274,7 @@ router.get("/show_Expenses1",(req,res,next)=>{
 router.get("/download11",(req,res,next)=>{
     const path1=req.query.path;
     console.log(path1);
-        res.download("../PROJECT/"+path1);
+        res.download("../SEPROJECT/public"+path1);
     
 });
 
@@ -308,26 +309,28 @@ router.get("/add_mou",(req,res,next)=>{
 
 router.post("/add_mou",(req,res,next)=>{
     const spon=req.body.sponser;
-    const mou=req.file.path;    
+    const mou=req.files[0].filename;
+    const mou1=mou.replace(mou,"images\\"+mou)    
     const db=getdb();
-    db.collection("Sponsers").updateOne({Sponser_name:spon},{$set:{mou:mou}},(err,data)=>{
+    db.collection("Sponsers").updateOne({Sponser_name:spon},{$set:{mou:mou1}},(err,data)=>{
         if(err)
         console.log("error")
         else
         {
-            res.redirect("/add_mou");
+            res.redirect("/view_Sponser1");
         }
     })
 })
 router.post("/add_Sponser1",(req,res,next)=>{
     const name=req.body.spon
     const logo1=req.files
-    const logo=logo1[0].path
+    const logo=logo1[0].filename
+    const logo2=logo.replace(logo,"images\\"+logo)
     const mou='';
     const db=getdb();
     const data={
         Sponser_name:name,
-        Image:logo,
+        Image:logo2,
         mou:mou
         
     }
@@ -335,7 +338,7 @@ router.post("/add_Sponser1",(req,res,next)=>{
               if(err)
               console.log("Error")
               else
-              res.redirect("/add_Sponser1");
+              res.redirect("/view_Sponser1");
     })
 });
 
@@ -410,7 +413,7 @@ router.get("/edit_Fund1",(req,res,next)=>{
             if(err)
             console.log("error")
             else
-           {
+           {console.log(data2)
              
             res.render("sponser_admin/edit/edit_Fund",{
                    info:data2
@@ -584,7 +587,7 @@ router.get("/view_mou",(req,res,next)=>{
              const path=data.mou;
              
              if(path!='')
-             res.download("../PROJECT/"+path);
+             res.download("../SEPROJECT/public/"+path);
              else
              res.redirect("/view_Sponser1")
          })
@@ -616,7 +619,7 @@ router.get("/request_Fund1",(req,res,next)=>{
 })
 
 router.post("/request_Fund1",(req,res,next)=>{
-    const amt=req.body.amt;
+    const amt=parseInt(req.body.amt);
     const dt=new Date(Date.now()).toDateString();
     const info={
         id:new mongodb.ObjectID(),
@@ -665,7 +668,7 @@ router.get("/request_Status",(req,res,next)=>{
 
 
 router.get("/sponsor", (req, res, next) => {
-    console.log("heyyayaa")
+   
     const db = getdb();
     db.collection('Sponsers').find().toArray((err, data) => {
         res.setHeader('Access-Control-Allow-Origin', '*');

@@ -89,8 +89,13 @@
                   <%= event.Judges %>
                     </td>
                 <td>
-
+                  <% if(event.teamstatus=='off') { %>
+                
                  <a class="btn btn-info" href="/view_Participants?Event_name=<%= event.Event_name %>">Participants</a>
+                 <% }else { %>
+                  <a class="btn btn-info" href="/view_Team?Event_name=<%=event.Event_name %>">Participants</a>
+                  <% } %>
+
                 </td>
                 <td>
 

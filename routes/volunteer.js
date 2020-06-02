@@ -88,9 +88,9 @@ router.get("/check_volunterring/:email", (req, res, next) => {
                     res.json(err);
                 } else {
                     // res.data(data2);
-                    // console.log(data2);
-                    res.json(data2[0].volunteer_status);
-                    console.log(data2[0].volunteer_status);
+                    console.log(data[0].volunteer_status);
+                    res.json(data[0].volunteer_status);
+                    console.log(data2);
                 }
             });
         } else {

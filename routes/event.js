@@ -90,10 +90,14 @@ router.post("/add_Event",(req,res,next)=>{
        const venue=req.body.venue
        const time=req.body.time;
        const date=req.body.date;
+       const date1=date.split("-").reverse().join("/");
+       const team=req.body.team
        const judges=req.body.judges;
        const file=req.files;
-       const logo=file[0].path;
-       const pdf=file[1].path;
+       const logo=file[0].filename;
+        const logo1=logo.replace(logo,'images\\'+logo)
+       const pdf=file[1].filename;
+       const pdf1=pdf.replace(pdf,"images\\"+pdf)
        const sponser=[];
        const insertdata={
               Event_name:event_name,
@@ -106,13 +110,15 @@ router.post("/add_Event",(req,res,next)=>{
              
                             Event_name:event_name,
                             Venue:venue,
-                            Date:date,
+                            Date:date1,
                             time:time,
                             participation:[],
                             Judges:judges,
                             Volunteer:[],
-                            pdf:pdf,
-                            image:logo
+                            pdf:pdf1,
+                            image:logo1,
+                            team:[],
+                            teamstatus:team
                      }
 
                      
@@ -245,6 +251,106 @@ else
        res.redirect("/login");
 }
 });
+router.get("/process_Team",(req,res,next)=>{
+    if(req.session.username)
+    {
+        const event=req.session.info
+        let team=[];
+        let eventname
+        for(let i=0; i<event.length; i++)
+        {
+            eventname=event[i].Sub_Events.Event_name
+               event[i].Sub_Events.team.forEach(data=>{
+                     if(team.indexOf(data.name.toLowerCase())==-1)
+                     {
+                         team.push(data.name.toLowerCase())
+                     }
+               })
+            }
+            console.log(team)
+            console.log(eventname)
+            res.render("admin/show/view_Team",{
+                info:team,
+                event:eventname
+            })
+
+        
+    }
+    else
+    {
+        res.redirect("/login");
+    }
+})
+
+router.get("/show_Team",(req,res,next)=>{
+    if(req.session.username)
+    {
+           const team=req.query.name;
+           const event=req.query.eventname;
+           const db=getdb();
+           db.collection("Main_Event").aggregate([{$unwind:'$Sub_Events'},{$match:{'Sub_Events.Event_name':{$eq:event}}}]).toArray((err,data)=>{
+               
+                req.session.info=data;
+                req.session.event=event;
+                req.session.teamname=team
+                res.redirect("/process_show_team");
+                });
+  
+
+    }
+    else
+    {
+        res.redirect("/login");
+    }
+})
+router.get("/process_show_team",(req,res,next)=>{
+    if(req.session.username)
+    {
+        const db=getdb();
+        const info=req.session.info;
+        const team=req.session.teamname
+        const event=req.session.event;
+        console.log(info);
+        let stud=[];
+        let institute=[];
+        for(let i=0; i<info.length; i++)
+        {
+               info[i].Sub_Events.team.forEach(data=>{
+                      if(team==data.name.toLowerCase())
+                      {
+                      const id2=mongodb.ObjectID('5e79bd7bc5808a541b546d48');
+                      const id1=mongodb.ObjectID(data.Student_id);
+                      institute.push(data.institute)
+                      stud.push(id1);
+                      stud.push(id2);
+                      }
+                        
+ 
+               })
+               
+               
+        }
+       
+      
+     
+        db.collection("Student").find({_id:{$in:stud}}).toArray((err,data2)=>{
+               
+               if(err)
+               console.log("error")
+               else 
+               res.render("admin/show/show_Team",{
+                      detail:data2,
+                      institute:institute,
+                      event:event
+               })
+        })
+ 
+    }
+    else
+    {
+        res.redirect("/login")
+    }
+})
 router.get("/process_participants",(req,res,next)=>{
        if(req.session.username)
        {
@@ -308,6 +414,23 @@ else
        res.redirect("/login");
 }
 });
+router.get("/view_Team",(req,res,next)=>{
+    if(req.session.username)
+    {
+           const name=req.query.Event_name
+           const db=getdb()
+           db.collection("Main_Event").aggregate([{$unwind:'$Sub_Events'},{$match:{'Sub_Events.Event_name':{$eq:name}}}]).toArray((err,data)=>{
+           
+             req.session.info=data;
+             req.session.event=name;
+             res.redirect("/process_Team");
+             });
+    }
+    else
+    {
+        res.redirect("/login")
+    }
+})
 
 
 router.get("/process_Sponsers",(req,res,next)=>{
@@ -366,8 +489,34 @@ router.post("/edit_Event",(req,res,next)=>{
        const venue=req.body.venue
        const time=req.body.time;
        const date=req.body.date;
+       let logo;
+       let pdf;
+       if(req.files.length>1)
+       {
+
+       const logo=req.files[0].filename
+       const pdf=req.files[1].filename
+       logo=logo.replace(logo,"images\\"+logo)
+       pdf=pdf.replace(pdf,"images\\"+pdf)
+       }
+       else if(req.files.length==1)
+       {
+           if(req.files[0].filename.split('.').pop()=='pdf')
+           {
+                pdf=req.files[0].filename
+                pdf=pdf.replace(pdf,"images\\"+pdf)
+           }
+           else
+           {
+               logo=req.files[0].filename
+               logo=logo.replace(logo,"images\\"+logo)
+           }
+       }
+
+       const date1=date.split("-").reverse().join("/");
        const judges=req.body.judges;
-      
+       const team=req.body.team;
+      console.log(logo + ""+ pdf)
      
        const db=getdb();
       
@@ -375,15 +524,17 @@ router.post("/edit_Event",(req,res,next)=>{
       
       
       
-              
+      if(logo==null && pdf==null)
+      {        
        db.collection("Main_Event").updateOne({"Category_name":cat,"Sub_Events.Event_name":req.query.Event_name},{$set:{
              
               "Category_name":cat,
               "Sub_Events.$.Event_name":event_name,
               "Sub_Events.$.Venue":venue,
-              "Sub_Events.$.Date":date,
+              "Sub_Events.$.Date":date1,
               "Sub_Events.$.time":time,
               "Sub_Events.$.Judges":judges,
+              "Sub_Events.$.teamstatus":team
               
               
        }},(err,data)=>{
@@ -397,6 +548,87 @@ router.post("/edit_Event",(req,res,next)=>{
                      res.redirect("/edit_Event?Event_name="+ req.query.Event_name);
               }
        })
+    }
+    else if(logo!=null && pdf==null)
+    {
+        db.collection("Main_Event").updateOne({"Category_name":cat,"Sub_Events.Event_name":req.query.Event_name},{$set:{
+             
+            "Category_name":cat,
+            "Sub_Events.$.Event_name":event_name,
+            "Sub_Events.$.Venue":venue,
+            "Sub_Events.$.Date":date1,
+            "Sub_Events.$.time":time,
+            "Sub_Events.$.Judges":judges,
+            "Sub_Events.$.teamstatus":team,
+            "Sub_Events.$.logo":logo
+            
+            
+     }},(err,data)=>{
+            if(err)
+            {
+                   console.log("error");
+            }
+            else
+            {
+                   console.log("Updated");
+                   res.redirect("/edit_Event?Event_name="+ req.query.Event_name);
+            }
+     })
+    }
+    else if(logo==null && pdf!=null)
+    {
+        db.collection("Main_Event").updateOne({"Category_name":cat,"Sub_Events.Event_name":req.query.Event_name},{$set:{
+             
+            "Category_name":cat,
+            "Sub_Events.$.Event_name":event_name,
+            "Sub_Events.$.Venue":venue,
+            "Sub_Events.$.Date":date1,
+            "Sub_Events.$.time":time,
+            "Sub_Events.$.Judges":judges,
+            "Sub_Events.$.teamstatus":team,
+            "Sub_Events.$.pdf":pdf
+            
+            
+     }},(err,data)=>{
+            if(err)
+            {
+                   console.log("error");
+            }
+            else
+            {
+                   console.log("Updated");
+                   res.redirect("/edit_Event?Event_name="+ req.query.Event_name);
+            }
+     })
+    }
+    else
+    {
+        db.collection("Main_Event").updateOne({"Category_name":cat,"Sub_Events.Event_name":req.query.Event_name},{$set:{
+             
+            "Category_name":cat,
+            "Sub_Events.$.Event_name":event_name,
+            "Sub_Events.$.Venue":venue,
+            "Sub_Events.$.Date":date1,
+            "Sub_Events.$.time":time,
+            "Sub_Events.$.Judges":judges,
+            "Sub_Events.$.teamstatus":team,
+            "Sub_Events.$.logo":logo,
+            "Sub_Events.$.pdf":pdf
+
+            
+            
+     }},(err,data)=>{
+            if(err)
+            {
+                   console.log("error");
+            }
+            else
+            {
+                   console.log("Updated");
+                   res.redirect("/edit_Event?Event_name="+ req.query.Event_name);
+            }
+     })
+    }
 
 });
 
@@ -409,7 +641,7 @@ router.get("/view_mou1",(req,res,next)=>{
                 const path=data.mou;
                 
                 if(path!='')
-                res.download("../PROJECT/"+path);
+                res.download("../SEPROJECT/public/"+path);
                 else
                 {
                 res.redirect("/view_Sponsers?Event_name=" + req.session.event)
@@ -468,6 +700,277 @@ router.get("/view_mou1",(req,res,next)=>{
    })
    
 
+   router.get("/add_Expenses",(req,res,next)=>{
+    if(req.session.username)
+    {
+         res.render("admin/add/add_Expense");
+    }
+    else
+    {
+        res.redirect("/login");
+    }
+});
+
+router.post("/add_Expenses",(req,res,next)=>{
+    
+        const amt=req.body.amt;
+        const  des=req.body.des;
+        const pdf=req.file[0].filename
+        const pdf1=pdf.replace(pdf,"images\\"+pdf)
+         const db=getdb();
+        const user=req.session.username;
+        db.collection("Student").findOne({"email":user},(err,data)=>{
+         const com_id=data.com_id
+         const data1={
+             "committee_id":com_id,
+             "expenses_detail":des,
+             "expense_amt":amt,
+             "bill_img":pdf1
+         }
+         db.collection("Expenses").insertOne(data1,(err,data2)=>{
+             if(err)
+                console.log("error");
+             else
+             {
+                console.log("Inserted");
+                db.collection("Committee").findOne({"_id":com_id},(err,data3)=>{
+                    if(data3.type=='Core')
+                    {
+                        db.collection("Funds").findOne({"committee_id":com_id},(err,data5)=>{
+                            const amt1=data5.total_fund;
+                        db.collection("Funds").updateOne({"committee_id":com_id},{$set:{"total_fund":amt1-amt}},(err,data4)=>{
+
+                        })
+                    })
+                    }
+                    else
+                    {
+                        db.collection("Funds").findOne({"commmittee_id":com_id},(err,data5)=>{
+                            const amt1=data5.fund_allocated;
+                        db.collection("Funds").updateOne({"committee_id":com_id},{$set:{fund_allocated:amt1-amt}},(err,data4)=>{
+
+                        })
+                    })
+                    }
+                })
+                res.redirect("/add_Expenses")
+             }
+            })
+     })
+
+});
 
 
+
+router.get("/view_Expenses",(req,res,next)=>{
+
+    
+    if(req.session.username)
+    {
+        const db=getdb();
+    db.collection("Committee").find({}).toArray((err,data)=>{
+        res.render("admin/show/view_Expenses",{
+            info:data
+        });
+    })
+       
+    }
+    else
+    {
+        res.redirect("/login");
+    }
+})
+
+
+router.get("/show_Expenses",(req,res,next)=>{
+    const com_id=mongodb.ObjectID(req.query.Com_id);
+    const type=req.query.type;
+  if(req.session.username)
+  {
+      const page=parseInt(req.query.page);
+         const db=getdb();
+         db.collection("Expenses").find({committee_id:com_id}).count((err,data3)=>{
+         db.collection("Expenses").find({committee_id:com_id}).skip((page-1)*5).limit(5).toArray((err,data)=>{
+             res.render("admin/show/show_Expenses",{
+                 info:data,
+                 type:type,
+                 count:data3,
+                 com_id:com_id
+             });
+         })
+        })
+  }
+  else
+  {
+      res.redirect("/login");
+  }
+
+});
+
+
+router.get("/download1",(req,res,next)=>{
+    const path1=req.query.path;
+    console.log(path1);
+        res.download("../SEPROJECT/public/"+path1);
+    
+});
+
+router.get("/edit_Expenses",(req,res,next)=>{
+
+
+    if(req.session.username)
+    { 
+         const com_id=mongodb.ObjectID(req.query.com_id);  
+            const db=getdb();
+            db.collection("Expenses").findOne({_id:com_id},(err,data)=>{
+                res.render("admin/edit/edit_Expenses",{
+                    info:data
+                })
+            })         
+               
+    }
+    else
+    {
+        res.redirect("/login");
+    }
+})
+
+
+   router.get("/event_team", (req, res, next) => {
+       const db = getdb();
+       db.collection("Student").find({ "com_status": "1" }).toArray((err, data) => {
+           // console.log(data);
+           res.json(data);
+       });
+   })
+   
+   router.get("/show_Events", (req, res, next) => {
+       {
+           const db = getdb();
+           db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }]).toArray((err, data) => {
+               res.setHeader('Access-Control-Allow-Origin', '*');
+               if (err) {
+                   res.json(err);
+               } else {
+                   res.json(data);
+                   // console.log(data);
+               }
+   
+   
+           });
+       }
+   });
+   
+   router.get("/show_Events/:Event_name", (req, res, next) => {
+       {
+           const db = getdb();
+           console.log(req.params.Event_name);
+           res.setHeader('Access-Control-Allow-Origin', '*');
+           db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }, { $match: { 'Sub_Events.Event_name': req.params.Event_name } }]).toArray((err, data) => {
+               res.setHeader('Access-Control-Allow-Origin', '*');
+               if (err) {
+                   res.json(err);
+               } else {
+                   res.json(data);
+                   // console.log(data);
+               }
+   
+   
+           });
+       }
+   
+   
+   });
+   
+   
+   router.get("/participate_Events", (req, res, next) => {
+       const userId = req.session.username;
+   
+       if (userId) {
+           const name = req.query.eventname;
+           res.render("user/add/participate_Events.ejs", { EventName: name, user: userId });
+   
+   
+       } else {
+           res.redirect("/login")
+       }
+   });
+   
+   router.post("/participate_Events", (req, res, next) => {
+       // if (req.session.username) {
+   
+       // console.log(req.body);
+       const eve = req.body.event;
+       let hasParticipated = 0;
+       let stu_id = "";
+       const db = getdb();
+       let already_participated = "You have already participated in this event";
+       let successfully_participated = "Your participation request is sucessfully accepted";
+       // console.log(req.body.email);
+       db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }, { $match: { 'Sub_Events.Event_name': { $eq: eve } } }]).toArray((err, data) => {
+               let participationList = data[0].Sub_Events.participation;
+               // console.log(participationList);
+               db.collection("Student").findOne({ "email": req.body.email }, (err, stu) => {
+                   if (stu) {
+                       // console.log(stu._id);
+                       stu_id = stu._id;
+                       for (let i = 0; i < participationList.length; i++) {
+                           if (participationList[i]._id.toString() === stu_id.toString()) {
+                               hasParticipated = 1;
+                               res.json(already_participated);
+                               console.log("You have already participated in this event");
+   
+                           }
+                       }
+                   }
+                   // console.log(stu_id);
+                   if (hasParticipated === 0) {
+                       const participants = {
+                               _id: stu_id,
+                               team: req.body.team,
+                               institute: req.body.institute,
+                               email: req.body.email,
+                               phone: req.body.phone,
+                               //team size should be added here and in database
+   
+                           }
+                           // console.log(participants);
+                       db.collection("Main_Event").updateOne({ "Sub_Events.Event_name": req.body.event }, { $push: { "Sub_Events.$.participation": participants } }, (err, data1) => {
+                           if (err) {
+                               console.log("error");
+                           } else {
+                               // res.json(data1);
+                               res.json(successfully_participated);
+                               console.log("Your participation request is sucessfully accepted");
+                           }
+                       })
+   
+                   }
+   
+   
+               })
+           })
+           // } 
+           // else {
+           //     res.redirect("/login");
+           // }
+   });
+   
+   
+   router.get("/eventgallary", (req, res, next) => {
+       {
+           const db = getdb();
+           db.collection("Images").find().toArray((err, data) => {
+               res.setHeader('Access-Control-Allow-Origin', '*');
+               if (err) {
+                   res.json(err);
+               } else {
+                   res.json(data);
+                   // console.log(data);
+               }
+           });
+       }
+   });
+   
+   
 module.exports=router;

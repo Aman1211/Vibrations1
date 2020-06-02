@@ -39,21 +39,21 @@
                           
                       <div class="form-group">
                         <label for="exampleInputEmail3">Price (per unit)</label>
-                        <input type="number" class="form-control" id="exampleInputEmail3" value="<%= Product.price %>" name="price" required>
+                        <input type="number" class="form-control" id="price1" value="<%= Product.price %>" onfocus="before1()" onblur="check1()" name="price" required>
                       </div>
 
                       <div class="form-group">
                         <label for="exampleInputEmail3">Quantity</label>
-                        <input type="number" class="form-control" id="exampleInputEmail3" value="<%= Product.quantity %>" name="quantity" required>
+                        <input type="number" class="form-control" id="qty" value="<%= Product.quantity %>" onfocus="before()" onblur="check()" name="quantity" required>
                       </div>
         
                       <div class="form-group">
                           <label for="exampleFile">Image of the Product</label>
-                          <input type="file" class="form-control" id="exampleFile" value="<%= Product.image %>"name="upload" required> 
+                          <input type="file" class="form-control" id="exampleFile" value="<%= Product.image %>"name="upload"> 
                       </div>
                       <div class="form-group">
                         
-                        <input type="submit" class="form-control" name="submit" value="Save Changes" style="font-weight: bold; background-color:azure;">
+                        <input type="submit" class="form-control"  name="submit" value="Save Changes" style="font-weight: bold; background-color:azure;">
                     </div>
                   
                       </div>
@@ -73,5 +73,39 @@
 </div>
   <!-- plugins:js -->
   </body>
+  <script>
+    let price;
+    let qty;
+    function before(){
+      const id=document.getElementById("qty")
+      qty=id.value
+    }
+    function before1(){
+      const id=document.getElementById("price1")
+      price=id.value
+    }
+    
+  function check(){
+     
+    const id=document.getElementById('qty')
+   
+    if(parseInt(id.value)<0)
+    {
+      alert(" Quantity must be positive")
+      id.value=qty
+    }
+  }
+  function check1(){
+     
+     const id=document.getElementById('price1')
+    
+     if(parseInt(id.value)<0)
+     {
+       alert(" Price must be positive")
+       id.value=price
+     }
+   }
 
+   
+</script>
 </html>

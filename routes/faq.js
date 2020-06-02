@@ -1,3 +1,4 @@
+
 const app = require("express");
 const express = require("express");
 const getdb = require("../db").getdb;
@@ -53,7 +54,7 @@ router.post("/faq", (req, res, next) => {
     console.log(req.body);
     db.collection('Student').find({ "email": req.body.email }).toArray((err, data) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
-        if (data) {
+        if (data.length != 0) {
             console.log(data[0]._id);
             var data1 = {
 
@@ -82,53 +83,46 @@ router.post("/faq", (req, res, next) => {
             console.log("Data Inserted Successfully");
             // return res.redirect("/faq");
             res.json(data1);
-            console.log(data1);
+            // console.log(data1);
         });
     });
 });
 
-// router.post("/faq_que/:email/:que", (req, res, next) => {
-//     const db = getdb();
-//     db.collection('Student').find({ "email": req.params.email }).toArray((err, data) => {
-//         res.setHeader('Access-Control-Allow-Origin', '*');
-//         const data1 = {
-//             "Student_id": data[0]._id,
-//             "Query_String": req.params.que,
-//             "reply_string": "",
-//             "status": "1",
-//             "ans_status": "0"
-//         }
-//         db.collection("QueryFeed").insertOne(data1, function(err) {
-//             if (err) {
-//                 console.log("Error Occured during Insertion");
-//             }
-//             console.log("Data Inserted Successfully");
-//             // return res.redirect("/faq");
-//             res.json(data1);
-//         });
-//     });
-// });
+router.post("/feedback", (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    const db = getdb();
+    console.log(req.body);
+    db.collection('Student').find({ "email": req.body.email }).toArray((err, data) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        if (data.length != 0) {
+            console.log(data[0]._id);
+            var data1 = {
 
-// router.post("/faq_feed/:email/:feed", (req, res, next) => {
-//     const db = getdb();
-//     db.collection('Student').find({ "email": req.params.email }).toArray((err, data) => {
-//         res.setHeader('Access-Control-Allow-Origin', '*');
-//         const data1 = {
-//             "Student_id": data[0]._id,
-//             "Query_String": req.params.feed + ".",
-//             "status": "0",
-//         }
-//         db.collection("QueryFeed").insertOne(data1, function(err) {
-//             if (err) {
-//                 console.log("Error Occured during Insertion");
-//             }
-//             console.log("Data Inserted Successfully");
-//             // return res.redirect("/faq");
-//             res.json(data1);
-//         });
-//     });
-// });
+                "Student_id": data[0]._id,
+                "Query_String": req.body.Query_String,
+                "Email": req.body.email,
+                "status": "0",
+            }
+        } else {
+            var data1 = {
+                "Email": req.body.email,
+                "Query_String": req.body.Query_String,
+                "status": "0",
+            }
+        }
 
+
+        db.collection("QueryFeed").insertOne(data1, function(err) {
+            if (err) {
+                console.log("Error Occured during Insertion");
+            }
+            console.log("Data Inserted Successfully");
+            // return res.redirect("/faq");
+            res.json(data1);
+            // console.log(data1);
+        });
+    });
+});
 // router.post("/faq_ask_question", (req, res, next) => {
 //     if (req.session.username) {
 //         const db = getdb();
@@ -182,3 +176,4 @@ router.post("/faq", (req, res, next) => {
 // });
 
 module.exports = router;
+

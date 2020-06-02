@@ -34,7 +34,7 @@
                       
                       <div class="form-group">
                           <label for="exampleFile">Amount Required</label>
-                          <input type="text" class="form-control" id="exampleFile" placeholder="Amount" name="amt" required> 
+                          <input type="text" class="form-control" id="exampleFile" placeholder="Amount" onblur="check()" name="amt" required> 
                       </div>
 
                       
@@ -60,6 +60,18 @@
 </div>
   <!-- plugins:js -->
   </body>
+  <script>
+    function check(){
+     
+      const id=document.getElementById('exampleFile')
+     
+      if(parseInt(id.value)<0)
+      {
+        alert("Amount must be positive")
+        id.value=""
+      }
+    }
+  </script>
 
 </html>
 

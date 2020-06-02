@@ -84,7 +84,8 @@ router.post("/radd_Expenses",(req,res,next)=>{
     
     const amt=req.body.amt;
     const  des=req.body.des;
-    const pdf=req.file.path;
+    const pdf=req.files[0].filename;
+    const pdf1=pdf.replace(pdf,"images\\"+pdf)
      const db=getdb();
     const user=req.session.username;
  db.collection("Student").findOne({"email":user},(err,data)=>{
@@ -93,7 +94,7 @@ router.post("/radd_Expenses",(req,res,next)=>{
          "committee_id":com_id,
          "expenses_detail":des,
          "expense_amt":amt,
-         "bill_img":pdf
+         "bill_img":pdf1
      }
      db.collection("Expenses").insertOne(data1,(err,data2)=>{
          if(err)
@@ -159,7 +160,7 @@ router.get("/rshow_Expenses",(req,res,next)=>{
 router.get("/rdownload1",(req,res,next)=>{
     const path1=req.query.path;
     console.log(path1);
-        res.download("../PROJECT/"+path1);
+        res.download("../SEPROJECT/public/"+path1);
     
 });
 
@@ -289,12 +290,14 @@ router.get("/rremoveprocess_Member",(req,res,next)=>{
 
 router.post("/add_Goodies",(req,res,next)=>{
     const img=req.files;
+    console.log(img[0].filename)
+    const path1=img[0].filename.replace(img[0].filename,"images\\"+img[0].filename)
     let product={
        title : req.body.title,
        description : req.body.description,
        price : req.body.price,
        quantity : req.body.quantity,
-       image :img[0].path
+       image :path1
     }
         const db=getdb();
         db.collection("Product").insertOne(product,function(err){
@@ -352,13 +355,33 @@ router.get("/edit_Goodies",(req,res,next)=>{
 
 router.post("/edit_Goodies",(req,res,next)=>{
     const img=req.files;
-    let product={
+    let img1;
+    let product;
+    if(img.length>0)
+    {
+         img1=img[0].filename;
+         img1=img1.replace(img1,"images\\"+img)
+    
+     product={
         title : req.body.title,
         description : req.body.description,
         price : req.body.price,
         quantity : req.body.quantity,
-        image : img[0].path
+        image : img1
+
      }
+    }
+    else
+    {
+         product={
+            title : req.body.title,
+            description : req.body.description,
+            price : req.body.price,
+            quantity : req.body.quantity
+            
+    
+         }
+    }
      const id=mongodb.ObjectID(req.query.goodiesid);
          const db=getdb();
          db.collection("Product").updateOne({_id:id} , {$set:product},function(err){
@@ -474,15 +497,16 @@ router.get("/college_Invitation",(req,res,next)=>{
 router.post("/college_Invitation",(req,res,next)=>{
 
 const name=req.body.college;
-
+let name1=[]
+name1.push(name)
 const db=getdb()
-for(let i=0; i<name.length; i++)
+for(let i=0; i<name1.length; i++)
 {
-         db.collection("Colleges").findOne({College_name:name[i]},(err,data)=>{ 
+         db.collection("Colleges").findOne({College_name:name1[i]},(err,data)=>{ 
              const email=data.Email;
              console.log(email);
              const doc=new pdf;
-             doc.image('../PROJECT/images/bit.png', 110, 3, {width: 400, height: 150})
+             doc.image('../SEPROJECT/public/images/bit.png', 110, 3, {width: 400, height: 150})
    .text('', 320, 130);
    doc.moveDown();
    doc.fontSize(13);
@@ -555,7 +579,7 @@ router.post("/private_Invitation",(req,res,next)=>{
     const email=req.body.email;
     const db=getdb();
     const doc=new pdf;
-             doc.image('../PROJECT/images/bit.png', 110, 3, {width: 400, height: 150})
+             doc.image('../SEPROJECT/public/images/bit.png', 110, 3, {width: 400, height: 150})
    .text('', 320, 130);
    doc.moveDown();
    doc.fontSize(13);
