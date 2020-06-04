@@ -19,6 +19,7 @@ const MemberRouter=require("./routes/member");
 const sponseradmin=require("./routes/admin");
 const VolunteerRouter = require("./routes/volunteer"); //added file from scratch by helly
 const GoodiesRouter = require("./routes/goodies");
+const studentRouter=require("./routes/student")
 const FaqRouter = require("./routes/faq");
 const path=require("path");
 const session=require("express-session");
@@ -89,6 +90,7 @@ app.use(ExpenseRouterd);
 app.use(representRouter);
 app.use(VolunteerRouter);
 app.use(GoodiesRouter);
+app.use(studentRouter);
 app.use(cors())
 mongoconnect(()=>{
     app.listen(3000);

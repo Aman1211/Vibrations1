@@ -715,7 +715,7 @@ router.post("/add_Expenses",(req,res,next)=>{
     
         const amt=req.body.amt;
         const  des=req.body.des;
-        const pdf=req.file[0].filename
+        const pdf=req.files[0].filename
         const pdf1=pdf.replace(pdf,"images\\"+pdf)
          const db=getdb();
         const user=req.session.username;
@@ -836,141 +836,169 @@ router.get("/edit_Expenses",(req,res,next)=>{
 })
 
 
-   router.get("/event_team", (req, res, next) => {
-       const db = getdb();
-       db.collection("Student").find({ "com_status": "1" }).toArray((err, data) => {
-           // console.log(data);
-           res.json(data);
-       });
-   })
-   
-   router.get("/show_Events", (req, res, next) => {
-       {
-           const db = getdb();
-           db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }]).toArray((err, data) => {
-               res.setHeader('Access-Control-Allow-Origin', '*');
-               if (err) {
-                   res.json(err);
-               } else {
-                   res.json(data);
-                   // console.log(data);
-               }
-   
-   
-           });
-       }
-   });
-   
-   router.get("/show_Events/:Event_name", (req, res, next) => {
-       {
-           const db = getdb();
-           console.log(req.params.Event_name);
-           res.setHeader('Access-Control-Allow-Origin', '*');
-           db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }, { $match: { 'Sub_Events.Event_name': req.params.Event_name } }]).toArray((err, data) => {
-               res.setHeader('Access-Control-Allow-Origin', '*');
-               if (err) {
-                   res.json(err);
-               } else {
-                   res.json(data);
-                   // console.log(data);
-               }
-   
-   
-           });
-       }
-   
-   
-   });
-   
-   
-   router.get("/participate_Events", (req, res, next) => {
-       const userId = req.session.username;
-   
-       if (userId) {
-           const name = req.query.eventname;
-           res.render("user/add/participate_Events.ejs", { EventName: name, user: userId });
-   
-   
-       } else {
-           res.redirect("/login")
-       }
-   });
-   
-   router.post("/participate_Events", (req, res, next) => {
-       // if (req.session.username) {
-   
-       // console.log(req.body);
-       const eve = req.body.event;
-       let hasParticipated = 0;
-       let stu_id = "";
-       const db = getdb();
-       let already_participated = "You have already participated in this event";
-       let successfully_participated = "Your participation request is sucessfully accepted";
-       // console.log(req.body.email);
-       db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }, { $match: { 'Sub_Events.Event_name': { $eq: eve } } }]).toArray((err, data) => {
-               let participationList = data[0].Sub_Events.participation;
-               // console.log(participationList);
-               db.collection("Student").findOne({ "email": req.body.email }, (err, stu) => {
-                   if (stu) {
-                       // console.log(stu._id);
-                       stu_id = stu._id;
-                       for (let i = 0; i < participationList.length; i++) {
-                           if (participationList[i]._id.toString() === stu_id.toString()) {
-                               hasParticipated = 1;
-                               res.json(already_participated);
-                               console.log("You have already participated in this event");
-   
-                           }
-                       }
-                   }
-                   // console.log(stu_id);
-                   if (hasParticipated === 0) {
-                       const participants = {
-                               _id: stu_id,
-                               team: req.body.team,
-                               institute: req.body.institute,
-                               email: req.body.email,
-                               phone: req.body.phone,
-                               //team size should be added here and in database
-   
-                           }
-                           // console.log(participants);
-                       db.collection("Main_Event").updateOne({ "Sub_Events.Event_name": req.body.event }, { $push: { "Sub_Events.$.participation": participants } }, (err, data1) => {
-                           if (err) {
-                               console.log("error");
-                           } else {
-                               // res.json(data1);
-                               res.json(successfully_participated);
-                               console.log("Your participation request is sucessfully accepted");
-                           }
-                       })
-   
-                   }
-   
-   
-               })
-           })
-           // } 
-           // else {
-           //     res.redirect("/login");
-           // }
-   });
-   
-   
-   router.get("/eventgallary", (req, res, next) => {
-       {
-           const db = getdb();
-           db.collection("Images").find().toArray((err, data) => {
-               res.setHeader('Access-Control-Allow-Origin', '*');
-               if (err) {
-                   res.json(err);
-               } else {
-                   res.json(data);
-                   // console.log(data);
-               }
-           });
-       }
-   });
-   
+  
+router.get("/event_team", (req, res, next) => {
+    const db = getdb();
+    db.collection("Student").find({ "com_status": "1" }).toArray((err, data) => {
+        // console.log(data);
+        res.json(data);
+    });
+})
+
+router.get("/show_Events", (req, res, next) => {
+    {
+        const db = getdb();
+        db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }]).toArray((err, data) => {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(data);
+                // console.log(data);
+            }
+
+
+        });
+    }
+});
+
+router.get("/show_Events/:Event_name", (req, res, next) => {
+    {
+        const db = getdb();
+        console.log(req.params.Event_name);
+        db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }, { $match: { 'Sub_Events.Event_name': req.params.Event_name } }]).toArray((err, data) => {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(data);
+                // console.log(data);
+            }
+
+
+        });
+    }
+
+
+});
+
+
+router.get("/participate_Events", (req, res, next) => {
+    const userId = req.session.username;
+
+    if (userId) {
+        const name = req.query.eventname;
+        res.render("user/add/participate_Events.ejs", { EventName: name, user: userId });
+
+
+    } else {
+        res.redirect("/login")
+    }
+});
+
+router.post("/participate_Events", (req, res, next) => {
+    const eve = req.body.event;
+    let hasParticipated = 0;
+    let stu_id = "";
+    let team_status = "";
+    const db = getdb();
+    let already_participated = "You have already participated in this event";
+    let successfully_participated = "Your participation request is sucessfully accepted";
+    let successfully_team_participated = "Your participation request as team is sucessfully accepted";
+    // console.log(req.body.email);
+    db.collection("Main_Event").aggregate([{ $unwind: '$Sub_Events' }, { $match: { 'Sub_Events.Event_name': { $eq: eve } } }]).toArray((err, data) => {
+        let participationList = data[0].Sub_Events.participation;
+        let teamList = data[0].Sub_Events.team;
+        console.log(teamList);
+        db.collection("Student").findOne({ "email": req.body.email }, (err, stu) => {
+            if (stu) {
+                // console.log(stu._id);
+                stu_id = stu._id;
+                if (data[0].Sub_Events.teamstatus == null) {
+                    for (let i = 0; i < participationList.length; i++) {
+                        if (participationList[i]._id.toString() === stu_id.toString()) {
+                            hasParticipated = 1;
+                            res.json(already_participated);
+                            console.log("You have already participated in this event");
+
+                        }
+                    }
+                } else if (data[0].Sub_Events.teamstatus == "on") {
+                    console.log(stu_id);
+                    for (let i = 0; i < teamList.length; i++) {
+                        if (teamList[i].Student_id.toString() === stu_id.toString()) {
+                            hasParticipated = 1;
+                            res.json(already_participated);
+                            console.log("You have already participated in this event");
+                        }
+                    }
+                }
+
+            }
+            // console.log(stu_id);
+            if (hasParticipated === 0) {
+                // console.log(data[0].Sub_Events.teamstatus);
+                console.log(stu_id);
+                if (data[0].Sub_Events.teamstatus == null) {
+                    const participants = {
+                        _id: stu_id,
+                        // team: req.body.team,
+                        institute: req.body.institute,
+                        email: req.body.email,
+                        phone: req.body.phone,
+                    }
+                    db.collection("Main_Event").updateOne({ "Sub_Events.Event_name": req.body.event }, { $push: { "Sub_Events.$.participation": participants } }, (err, data1) => {
+                        if (err) {
+                            console.log("error");
+                        } else {
+                            // res.json(data1);
+                            res.json(successfully_participated);
+                            console.log("Your participation request is sucessfully accepted");
+                        }
+                    })
+
+                } else if (data[0].Sub_Events.teamstatus == "on") {
+                    const teams = {
+                        Student_id: stu_id,
+                        name: req.body.team,
+                        institute: req.body.institute,
+                        team_size: req.body.team_size
+                    }
+                    db.collection("Main_Event").updateOne({ "Sub_Events.Event_name": req.body.event }, { $push: { "Sub_Events.$.team": teams } }, (err, data1) => {
+                        if (err) {
+                            console.log("error");
+                        } else {
+                            // res.json(data1);
+                            res.json(successfully_team_participated);
+                            console.log("Your participation request as team is sucessfully accepted");
+                        }
+                    })
+                    console.log("success")
+
+                }
+
+
+            }
+
+
+        })
+    })
+
+});
+
+
+router.get("/eventgallary", (req, res, next) => {
+    {
+        const db = getdb();
+        db.collection("Images").find().toArray((err, data) => {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(data);
+                // console.log(data);
+            }
+        });
+    }
+});   
    
 module.exports=router;
