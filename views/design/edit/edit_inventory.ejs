@@ -27,12 +27,12 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleDate2">Price</label>
-                      <input type="text" class="form-control" id="exampleDate2" placeholder="Total Price" name="price" required>
+                      <input type="number" class="form-control" id="exampleDate2" placeholder="Total Price" onblur="check()" value="" name="price" required>
                     </div> 
 
                     <div class="form-group">
                       <label for="exampleInputEmail3">Quantity</label>
-                      <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Add Quantity" name="quantity" required>
+                      <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Add Quantity" onblur="check1()" value="" name="quantity" required>
                     </div>
 
                     <div class="form-group">
@@ -54,6 +54,28 @@
 </div>
   <!-- plugins:js -->
   </body>
+  <script>
+    function check1(){
+     
+      const id=document.getElementById('exampleInputEmail3')
+     
+      if(parseInt(id.value)<=0)
+      {
+        alert("Quantity must be positive and more than 0")
+        id.value=""
+      }
+    }
+    function check(){
+     
+     const id=document.getElementById('exampleDate2')
+    
+     if(parseInt(id.value)<0)
+     {
+       alert("Amount must be positive")
+       id.value=""
+     }
+   }
+  </script>
 
 </html>
 

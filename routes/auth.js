@@ -20,7 +20,7 @@ router.get("/reg",(req,res,next)=>{
 });
 
 router.get("/login",(req,res,next)=>{
-    res.render('login',{
+    res.render('login1',{
         errormessage:req.flash("error")
     });
 });

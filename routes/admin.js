@@ -409,7 +409,7 @@ router.get("/edit_Fund1",(req,res,next)=>{
          const event=req.query.event;
          const id=mongodb.ObjectId(req.query.id);
          const db=getdb();
-         db.collection("Event_Sponser").aggregate([{$match:{"Event_name":event,"Sponsers.id":id}},{$unwind:"$Sponsers"},{$lookup:{from:"Sponsers",localField:"Sponsers.id",foreignField:"_id",as:"data"}}]).toArray((err,data2)=>{
+         db.collection("Event_Sponser").aggregate([{$match:{"Event_name":event}},{$unwind:"$Sponsers"},{$match:{"Sponsers.id":{$eq:id}}},{$lookup:{from:"Sponsers",localField:"Sponsers.id",foreignField:"_id",as:"data"}}]).toArray((err,data2)=>{
             if(err)
             console.log("error")
             else

@@ -43,7 +43,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="name" placeholder="Name" required>
+						<input class="input100" type="text" onblur="check2()" value="" id="name1" name="name" placeholder="Name" required>
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
@@ -101,4 +101,19 @@
 	<script src="js/main.js"></script>
 
 </body>
+<script>
+	function check2(){
+		 const name=document.getElementById("name1")
+		 if(Number.isFinite(parseInt(name.value)))
+		 {
+			 alert("Enter Valid name")
+			 name.value=""
+		 }
+		 else
+		 {
+
+		 }
+		 
+	}
+</script>
 </html>

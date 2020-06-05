@@ -365,7 +365,7 @@ router.get("/process_participants",(req,res,next)=>{
               info[i].Sub_Events.participation.forEach(data=>{
                      
                      const id2=mongodb.ObjectID('5e79bd7bc5808a541b546d48');
-                     const id1=mongodb.ObjectID(data);
+                     const id1=mongodb.ObjectID(data._id);
                      stud.push(id1);
                      stud.push(id2);
                        

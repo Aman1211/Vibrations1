@@ -498,8 +498,19 @@ router.post("/college_Invitation",(req,res,next)=>{
 
 const name=req.body.college;
 let name1=[]
-name1.push(name)
+if(Array.isArray(name))
+{
+    for(let i=0 ; i<name.length ;i++)
+    {
+        name1.push(name[i])
+    }
+}
+else
+{
+    name1.push(name)
+}
 const db=getdb()
+console.log(name1)
 for(let i=0; i<name1.length; i++)
 {
          db.collection("Colleges").findOne({College_name:name1[i]},(err,data)=>{ 

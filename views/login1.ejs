@@ -10,7 +10,7 @@
         <form method="POST">
             <div class="user-box">
                 <!-- <input type="text" name="" required=""> -->
-                <input type="email" name="Email_id"  class="form-control"  required>
+                <input type="email" name="username" id="user" class="form-control" onblur="check()" value=""  required>
             
                
 
@@ -19,14 +19,14 @@
             <br>
             <div class="user-box">
                 <!-- <input type="password"> -->
-                <input name="Password"  type="password" class="form-control" required>
+                <input name="pass"  type="password" id="pass" class="form-control"  onblur="check()" value="" required>
                
                 <label>Password</label>
             </div>
             <br>
-            <div >
+            <div id="button1" hidden="true">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 <button>
+                 <button >
                     <span></span>
                     <span></span>
                     <span></span>
@@ -54,4 +54,20 @@
     </div>
 </div>
 </body>
+<script>
+    function check(){
+       
+        const user=document.getElementById("user")
+        const pass=document.getElementById("pass")
+        const bt=document.getElementById("button1")
+        if(user.value=="" || pass.value=="")
+        {
+               bt.hidden=true
+        }
+        else
+        {
+            bt.hidden=false
+        }
+    }
+    </script>
 </html>

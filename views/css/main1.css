@@ -111,6 +111,7 @@ h2 {
     position: relative;
     display: inline-block;
     padding: 10px 20px;
+    background-color: black;
     color: #03E9F4;
     font-size: 16px;
     text-decoration: none;
