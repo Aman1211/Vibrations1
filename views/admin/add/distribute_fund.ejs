@@ -30,9 +30,9 @@
                         <label for="exampleVenue">Select Committee</label>
                           <select class="form-control" id="exampleVenue" name="com">
                             <% for(let i=0;i < info.length; i++){ %>
-                                <% if(!info[i].status=='1') { %> 
+                               
                                  <option> <%= info[i].Committee_name %></option>
-                              <% } }%>   
+                              <% } %>   
                           </select>
                         </div>
                       				
@@ -42,20 +42,25 @@
                         <input type="number" class="form-control" id="exampleInputEmail3" placeholder="Amount"  name="amt" value="" onblur="check()" required>
                       </div>
                       
-                      
-                                            
+                        <% if(info.length==0) { %>
+                          
+                        <a class="form-control" href="/resetfund" name="resetfund" value="Reset Fund"   style="font-weight:bold;text-align: center; background-color:azure;">  Reset Fund</a>
+                        <% } else { %>     
+                              
                         <input type="submit" class="form-control" name="submit" value="Submit" style="font-weight: bold; background-color:azure;">
-                    </div>
+                         <% } %>
+                      </div>
                   
                       </div>
          
         
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-       <%- include("../footer") %>
+       
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
+      <%- include("../footer") %>
     </div>
     </form>
     <!-- page-body-wrapper ends -->

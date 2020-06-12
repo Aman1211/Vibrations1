@@ -601,6 +601,7 @@ router.get("/view_mou",(req,res,next)=>{
 
 router.get("/logout1",(req,res,next)=>{
     req.session.username=null;
+    req.session.validate=null;
     if(!req.session.username)
     res.redirect("/login");
 })

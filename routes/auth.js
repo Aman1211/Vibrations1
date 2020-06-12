@@ -21,7 +21,7 @@ router.get("/reg",(req,res,next)=>{
 
 router.get("/login",(req,res,next)=>{
     res.render('login1',{
-        errormessage:req.flash("error")
+        errormessage:req.session.validate
     });
 });
 
@@ -34,9 +34,11 @@ router.post("/login",(req,res,next)=>{
     const user=db.collection("Student");
     user.findOne({"email":username},(err,data)=>{
           if(!data)
-          
+          {
+        req.session.validate=1
            return res.redirect('/login');
-          else
+          }
+           else
           {
               bcrypt.compare(password,data.password).then(domatch=>{
                     if(domatch)
@@ -92,6 +94,7 @@ router.post("/login",(req,res,next)=>{
                     else
                     {
                    req.flash("error","Invalid Username or Passsword");
+                     req.session.validate=1;
                     return res.redirect("/login");
                     }
               }).catch(err=>{

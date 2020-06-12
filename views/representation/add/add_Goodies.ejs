@@ -29,7 +29,8 @@
                       
                       <div class="form-group">
                         <label for="exampleDate">Product Title</label>
-                        <input type="text" class="form-control" id="exampleDate" placeholder="Title of Product" name="title" required>
+                        <input type="text" class="form-control" id="exampleDate" placeholder="Title of Product"  onkeypress="return (event.charCode > 64 && 
+                        event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"  name="title" required>
                       </div>
                       
                       <div class="form-group">
@@ -44,7 +45,7 @@
 
                       <div class="form-group">
                         <label for="exampleInputEmail3">Quantity</label>
-                        <input type="number" class="form-control" id="qty" placeholder="quantity" onblur="check1()" name="quantity" required>
+                        <input type="number" class="form-control" id="qty" placeholder="quantity"  onkeypress=" return event.charCode!=46" onblur="check1()" name="quantity" required>
                       </div>
         
                       <div class="form-group">

@@ -428,10 +428,11 @@ router.get("/view_Orders",(req,res,next)=>{
          db.collection("Product")
          .aggregate([{$match:{_id:id}},{$lookup:{from:"Student",localField:"_id",foreignField:"product","as":"data"}}])
          .toArray((err,result)=>{
+            
             if(!err)
             {
                 
-               res.render("representation/show/view_Orders",{Students:result ,user : req.session.username });
+               res.render("representation/show/view_Orders",{Students:result ,user : req.session.username,total:result[0].data.length });
             }
             else
             {

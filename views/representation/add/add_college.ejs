@@ -31,7 +31,8 @@
 
                  <div class="form-group">
                         <label for="exampleInputEmail3">College Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail3" placeholder="College name" name="college" required>
+                        <input type="text" class="form-control"  onkeypress="return (event.charCode > 64 && 
+                        event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"  id="exampleInputEmail3" placeholder="College name" name="college" required>
                       </div>
                       
                       

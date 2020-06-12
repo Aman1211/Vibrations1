@@ -33,8 +33,14 @@ router.get("/admin_core",(req,res,next)=>{
                         {
                             db.collection("Funds").findOne({committee_id:com_id},(err,data3)=>{
                                
-                               
+                                   if(data3==null)
+                                   {
+                                       fund=0;
+                                   }
+                                   else
+                                   {
                                    fund=data3.total_fund;
+                                   }
                             
                             });
                         }
@@ -494,8 +500,8 @@ router.post("/edit_Event",(req,res,next)=>{
        if(req.files.length>1)
        {
 
-       const logo=req.files[0].filename
-       const pdf=req.files[1].filename
+       let logo=req.files[0].filename
+       let pdf=req.files[1].filename
        logo=logo.replace(logo,"images\\"+logo)
        pdf=pdf.replace(pdf,"images\\"+pdf)
        }
@@ -560,7 +566,7 @@ router.post("/edit_Event",(req,res,next)=>{
             "Sub_Events.$.time":time,
             "Sub_Events.$.Judges":judges,
             "Sub_Events.$.teamstatus":team,
-            "Sub_Events.$.logo":logo
+            "Sub_Events.$.image":logo
             
             
      }},(err,data)=>{
@@ -595,13 +601,13 @@ router.post("/edit_Event",(req,res,next)=>{
                    console.log("error");
             }
             else
-            {
+             {
                    console.log("Updated");
                    res.redirect("/edit_Event?Event_name="+ req.query.Event_name);
             }
      })
     }
-    else
+    else if(logo!=null && pdf!=null)
     {
         db.collection("Main_Event").updateOne({"Category_name":cat,"Sub_Events.Event_name":req.query.Event_name},{$set:{
              
@@ -612,7 +618,7 @@ router.post("/edit_Event",(req,res,next)=>{
             "Sub_Events.$.time":time,
             "Sub_Events.$.Judges":judges,
             "Sub_Events.$.teamstatus":team,
-            "Sub_Events.$.logo":logo,
+            "Sub_Events.$.image":logo,
             "Sub_Events.$.pdf":pdf
 
             
@@ -852,6 +858,7 @@ router.get("/show_Events", (req, res, next) => {
             if (err) {
                 res.json(err);
             } else {
+                console.log(data)
                 res.json(data);
                 // console.log(data);
             }

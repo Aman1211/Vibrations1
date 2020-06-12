@@ -4,10 +4,14 @@
 <link rel="stylesheet" type="text/css" href="css/main1.css">
 </head>
 <body>
+    <%  if(errormessage==1) { %>
+        <script>alert("Invalid Username or Password") </script>
+    <% }%> 
 <div class="bg">
     <div class="login-box">
         <h2>Login</h2>
         <form method="POST">
+            
             <div class="user-box">
                 <!-- <input type="text" name="" required=""> -->
                 <input type="email" name="username" id="user" class="form-control" onblur="check()" value=""  required>
